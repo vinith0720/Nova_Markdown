@@ -1,5 +1,6 @@
-## 🔹 Advanced JavaScript Array Methods Cheat Sheet
+## 🔹 JavaScript Array Methods 
 
+#
 
 | Method           | Parameters                                    | Callback Parameters                        | Returns                  | Mutates? | Notes / Use Case                      |
 |------------------|-----------------------------------------------|--------------------------------------------|---------------------------|----------|----------------------------------------|
@@ -37,7 +38,7 @@
 - `array:` The original array
 
 
-### 🔁 Mutation Summary Table (Markdown)
+### ✅  Mutation Behaviour
 
 
 
@@ -45,3 +46,39 @@
 |------------------------|-------------------------------------------------------------------------|
 | ❌ No (Immutable)       | `map`, `filter`, `reduce`, `reduceRight`, `flatMap`, `find`, `findIndex`, `some`,  `every`, `includes`, `join`, `at`, `Array.from`, `Array.of`, `toSorted`, `toSpliced` |
 | ✅ Yes (Mutable)        | `sort`, `fill`, `copyWithin`, `splice`, `reverse`, `push`, `pop`, `shift`, `unshift` |
+
+
+
+#
+
+# 🔹 JavaScript Object Methods
+
+| Method                 | Parameters                     | Returns                   | Mutates? | Notes / Use Case                            |
+|------------------------|-------------------------------|----------------------------|----------|---------------------------------------------|
+| `Object.keys()`        | `(obj)`                        | Array of keys             | ❌       | Iterate keys or get length                  |
+| `Object.values()`      | `(obj)`                        | Array of values           | ❌       | Iterate values                              |
+| `Object.entries()`     | `(obj)`                        | Array of `[key, value]`   | ❌       | For `for...of`, maps, CSV, etc.             |
+| `Object.fromEntries()` | `([[key, value], ...])`        | Object                    | ❌       | Reverse of `entries()`                      |
+| `Object.assign()`      | `(target, ...sources)`         | Modified target object    | ✅       | Merge or clone (shallow)                    |
+| `Object.hasOwn()`      | `(obj, key)`                   | Boolean                   | ❌       | More reliable than `hasOwnProperty()`       |
+| `Object.freeze()`      | `(obj)`                        | Frozen object             | ✅       | Prevent any mutation (shallow)              |
+| `Object.seal()`        | `(obj)`                        | Sealed object             | ✅       | Prevent adding/removing props               |
+| `Object.create()`      | `(proto, propertiesObject?)`   | New object                | ❌       | Create object with custom prototype         |
+| `Object.defineProperty()` | `(obj, prop, descriptor)`  | Modified object           | ✅       | Fine control over properties                |
+| `Object.defineProperties()`| `(obj, descriptors)`      | Modified object           | ✅       | Multiple properties with descriptors        |
+| `Object.getOwnPropertyDescriptor()` | `(obj, prop)`   | Descriptor object         | ❌       | See config/writable/enumerable flags        |
+| `Object.getPrototypeOf()`| `(obj)`                     | Prototype object          | ❌       | Introspection / inheritance                 |
+| `Object.setPrototypeOf()`| `(obj, proto)`              | Modified object           | ✅       | Change prototype (not recommended)          |
+| `Object.is()`          | `(value1, value2)`             | Boolean                   | ❌       | Strict equality + handles `NaN`, `-0`       |
+| `Object.isFrozen()`    | `(obj)`                        | Boolean                   | ❌       | Check if frozen                             |
+| `Object.isSealed()`    | `(obj)`                        | Boolean                   | ❌       | Check if sealed                             |
+| `Object.preventExtensions()` | `(obj)`                 | Modified object           | ✅       | Prevent new props (existing still editable) |
+| `Object.isExtensible()`| `(obj)`                        | Boolean                   | ❌       | Check if extensible                         |
+
+
+## ✅ Mutation Behavior
+
+| Mutates Object? | Methods                                                                 |
+|------------------|-------------------------------------------------------------------------|
+| ❌ No            | `Object.keys`, `Object.values`, `Object.entries`, `Object.fromEntries`, `Object.is`, `Object.getPrototypeOf`, `Object.getOwnPropertyDescriptor`, `Object.isFrozen`, `Object.isSealed`, `Object.isExtensible` |
+| ✅ Yes           | `Object.assign`, `Object.freeze`, `Object.seal`, `Object.defineProperty`, `Object.defineProperties`, `Object.setPrototypeOf`, `Object.preventExtensions` |
