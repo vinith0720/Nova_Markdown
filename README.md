@@ -1,5 +1,6 @@
 ## 🔹 Advanced JavaScript Array Methods Cheat Sheet
 
+
 | Method           | Parameters                                    | Callback Parameters                        | Returns                  | Mutates? | Notes / Use Case                      |
 |------------------|-----------------------------------------------|--------------------------------------------|---------------------------|----------|----------------------------------------|
 | `map()`          | `(callback, thisArg?)`                        | `(value, index, array)`                    | New array                | ❌       | Transform each item                    |
@@ -24,14 +25,23 @@
 | `toSpliced()`    | `(start, deleteCount, ...items)`              | –                                          | New array                | ❌       | Immutable version of splice            |
 
 
----
+## 📥 Callback Parameters Breakdown
+
+
+### Most array methods that accept a callback use this format:
+
+`callback(currentValue, index, array)`
+
+- `currentValue:` The element being processed
+- `index:` The index of the element
+- `array:` The original array
+
 
 ### 🔁 Mutation Summary Table (Markdown)
 
-```markdown
-## 🔁 Does This Method Mutate the Original Array?
+
 
 | Mutates Original Array | Methods                                                                 |
 |------------------------|-------------------------------------------------------------------------|
-| ❌ No (Immutable)       | `map`, `filter`, `reduce`, `reduceRight`, `flatMap`, `find`, `findIndex`, `some`, `every`, `includes`, `join`, `at`, `Array.from`, `Array.of`, `toSorted`, `toSpliced` |
+| ❌ No (Immutable)       | `map`, `filter`, `reduce`, `reduceRight`, `flatMap`, `find`, `findIndex`, `some`,  `every`, `includes`, `join`, `at`, `Array.from`, `Array.of`, `toSorted`, `toSpliced` |
 | ✅ Yes (Mutable)        | `sort`, `fill`, `copyWithin`, `splice`, `reverse`, `push`, `pop`, `shift`, `unshift` |
