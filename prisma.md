@@ -174,15 +174,17 @@ Use this to explore and edit your database visually in the browser.
 - Modularize your Prisma client in large projects
 
 # 🆚 Prisma vs Sequelize 
+
 | Feature	             |  Prisma	                      | Sequelize
-| Language Support     |	TypeScript-first              |	JS-first, TS support
-| Type Safety	         |   ✅ Strong  	                | ❌ Weak
-| Migrations	         | Declarative, built-in          |	Imperative, verbose
-| Querying	           |  Fluent, type-safe	Chainable,  | less safe
-| Developer Experience |	⭐⭐⭐⭐⭐                  |	⭐⭐⭐
-| Visual Studio	       |  Prisma Studio                 |	❌ None
-| Raw SQL              |	✅ Supported	                |✅ Supported
-| Performance⚡        |  Fast for reads	              | Moderate
+|----------------------|---------------------------------|----------------------|
+| Language Support     |	TypeScript-first              |	JS-first, TS support  |
+| Type Safety	         |   ✅ Strong  	                | ❌ Weak              |
+| Migrations	         | Declarative, built-in          |	Imperative, verbose   |
+| Querying	           |  Fluent, type-safe	Chainable,  | less safe             |
+| Developer Experience |	⭐⭐⭐⭐⭐                  |	⭐⭐⭐               |
+| Visual Studio	       |  Prisma Studio                 |	❌ None               |
+| Raw SQL              |	✅ Supported	                |✅ Supported           |
+| Performance⚡        |  Fast for reads	              | Moderate               |
 
 # 📘 Resources
 - Official Docs: https://www.prisma.io/docs
