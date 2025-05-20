@@ -1,1 +1,196 @@
+# 📘 Prisma ORM Complete Guide 
+### 📌 What is Prisma?
+`Prisma` is a next-generation `TypeScript ORM` for `Node.js` and `JavaScript`. It provides a `clean`, `type-safe,` and performant way to interact with your relational databases like `PostgreSQL`, `MySQL`, `SQLite`, and `SQL Server`.
+#
+# ⚙️ Core Components
+## Component	Description
+- `schema.prisma`	Central configuration file to define data models, DB connection, and generators
+- `Prisma Client`	Auto-generated and type-safe database client
+- `Prisma Migrate`	Tool to manage DB schema and migrations
+- `Prisma Studio`	GUI for visual database management
+- `Introspection`	Generate models from existing DB
+- `Seed Scripts`	For inserting initial data
 
+## 🏗️ Project Structure Example
+``` psql
+my-app/
+├── prisma/
+│   └── schema.prisma
+├── node_modules/
+├── src/
+│   └── index.ts
+├── package.json
+└── tsconfig.json
+```
+# 🚀 Getting Started
+
+## Install dependencies
+```
+npm install prisma --save-dev
+npm install @prisma/client
+```
+## Initialize Prisma
+
+``` sql
+npx prisma init
+```
+## 🧾 schema.prisma Example
+
+```ts
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id      Int     @id @default(autoincrement())
+  name    String
+  email   String  @unique
+  posts   Post[]
+}
+
+model Post {
+  id      Int     @id @default(autoincrement())
+  title   String
+  content String?
+  userId  Int
+  user    User    @relation(fields: [userId], references: [id])
+}
+```
+## 🛠️ Migrations & DB Sync
+
+### Create a new migration and apply
+```bash
+npx prisma migrate dev --name init
+```
+
+### Apply migrations only
+```
+npx prisma migrate deploy
+```
+
+### Push changes directly (without migration files, useful for prototyping)
+```
+npx prisma db push
+```
+### 📥 Generate Prisma Client
+
+```
+npx prisma generate
+```
+# 🧑‍💻 Querying the Database
+### 🔍 Find Users with Posts
+```ts
+const users = await prisma.user.findMany({
+  include: { posts: true }
+});
+```
+### ➕ Create a User
+```ts
+const user = await prisma.user.create({
+  data: {
+    name: "Alice",
+    email: "alice@example.com"
+  }
+});
+```
+### 🔄 Update a User
+```ts
+const updatedUser = await prisma.user.update({
+  where: { id: 1 },
+  data: { name: "Updated Name" }
+});
+```
+### ❌ Delete a User
+```ts
+await prisma.user.delete({
+  where: { id: 1 }
+});
+```
+### 🔎 Filtering & Pagination
+```ts
+const users = await prisma.user.findMany({
+  where: {
+    email: { contains: "@example.com" }
+  },
+  skip: 10,
+  take: 5,
+  orderBy: { name: "asc" }
+});
+```
+### 🔐 Raw SQL Queries
+```ts
+const result = await prisma.$queryRaw`SELECT * FROM "User" WHERE email = 'alice@example.com'`;
+```
+### 🔁 Transactions
+```ts
+const [user, post] = await prisma.$transaction([
+  prisma.user.create({ data: { name: "John", email: "john@example.com" } }),
+  prisma.post.create({ data: { title: "Hello", userId: 1 } })
+]);
+```
+### 🧪 Seeding Data
+```ts
+// prisma/seed.ts
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
+
+async function main() {
+  await prisma.user.create({
+    data: {
+      name: "Seed User",
+      email: "seed@example.com"
+    }
+  });
+}
+main();
+```
+## prisma seed
+```
+npx prisma db seed
+```
+## 📊 Prisma Studio (GUI)
+
+```
+npx prisma studio
+```
+Use this to explore and edit your database visually in the browser.
+
+## ✅ Best Practices
+- Use npx prisma format to format schema.prisma
+
+- Keep schema and migration history in version control
+
+- Avoid direct usage of db.push in production
+
+- Always regenerate client after schema change
+
+- Use include and select to limit over-fetching
+
+- Modularize your Prisma client in large projects
+
+# 🆚 Prisma vs Sequelize 
+| Feature	             |  Prisma	                      | Sequelize
+| Language Support     |	TypeScript-first              |	JS-first, TS support
+| Type Safety	         |   ✅ Strong  	                | ❌ Weak
+| Migrations	         | Declarative, built-in          |	Imperative, verbose
+| Querying	           |  Fluent, type-safe	Chainable,  | less safe
+| Developer Experience |	⭐⭐⭐⭐⭐                  |	⭐⭐⭐
+| Visual Studio	       |  Prisma Studio                 |	❌ None
+| Raw SQL              |	✅ Supported	                |✅ Supported
+| Performance⚡        |  Fast for reads	              | Moderate
+
+# 📘 Resources
+- Official Docs: https://www.prisma.io/docs
+
+- GitHub: https://github.com/prisma/prisma
+
+- Prisma Examples: https://github.com/prisma/prisma-examples
+
+# "Why Prisma over Sequelize?"
+
+`Prisma offers a better developer experience, strong type safety, powerful query engine, and seamless integration with TypeScript — making it ideal for modern Node.js applications.`
