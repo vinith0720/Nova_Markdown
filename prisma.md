@@ -213,3 +213,14 @@ Use this to explore and edit your database visually in the browser.
 # "Why Prisma over Sequelize?"
 
 `Prisma offers a better developer experience, strong type safety, powerful query engine, and seamless integration with TypeScript — making it ideal for modern Node.js applications.`
+
+## ⚖️ When to use Prisma vs Sequelize?
+
+| Use Case                                     | Recommended ORM |
+|---------------------------------------------|-----------------|
+| TypeScript-first projects                    | ✅ Prisma        |
+| Fast MVP with raw flexibility                | ✅ Sequelize     |
+| Advanced relational queries with safety      | ✅ Prisma        |
+| Need for dynamic model creation at runtime   | ✅ Sequelize     |
+| Legacy systems or older databases            | ✅ Sequelize     |
+
