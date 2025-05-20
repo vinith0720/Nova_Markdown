@@ -61,6 +61,23 @@ model Post {
   user    User    @relation(fields: [userId], references: [id])
 }
 ```
+
+## prisma.ts
+```ts
+import { PrismaClient } from '@prisma/client'
+// or
+// const { PrismaClient } = require('@prisma/client')
+
+const prisma = new PrismaClient()
+
+// use inside an `async` function to `await` the result
+await prisma.user.findUnique(...)
+await prisma.user.findMany(...)
+await prisma.user.create(...)
+await prisma.user.update(...)
+await prisma.user.delete(...)
+await prisma.user.upsert(...)
+```
 ## 🛠️ Migrations & DB Sync
 
 ### Create a new migration and apply
