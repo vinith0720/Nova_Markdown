@@ -332,3 +332,24 @@ Use this to explore and edit your database visually in the browser.
 | Need for dynamic model creation at runtime   | ✅ Sequelize     |
 | Legacy systems or older databases            | ✅ Sequelize     |
 
+
+# 💡 Why Prisma is So Fast and Safe
+
+| Feature         | Why It’s Fast                                                                 |
+|----------------|--------------------------------------------------------------------------------|
+| Query Engine    | Written in Rust (compiled, low-level, super fast)                             |
+| Typed Client    | No runtime type checking needed                                               |
+| Lean SQL        | Only selects fields you request (`select`, `include`)                         |
+| No ORM Overhead | No heavy model instantiation like Sequelize                                   |
+
+---
+
+# 🏁 Summary
+
+| Layer           | Role                                                        |
+|----------------|-------------------------------------------------------------|
+| `Prisma Client`   | Type-safe JS/TS code                                        |
+| `Query Engine `   | Rust binary that talks to DB                                |
+| `Database `       | Executes final SQL queries                                  |
+| `schema.prisma`   | Central schema definition for models and config             |
+| `migrate`, `studio `| CLI tools that support the whole lifecycle                  |
