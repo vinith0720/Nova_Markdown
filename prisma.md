@@ -411,19 +411,15 @@ const userWithPosts = await prisma.user.findUnique({
 
 
 ```
-## ✅ Best Practices
+## 🚏 Best Practices
 
-- Use npx prisma format to format schema.prisma
+- ✅ Keep Prisma client instance **singleton**
+- ✅ Use `.env` for managing credentials
+- ✅ Seed data only in development
+- ✅ Abstract your DB layer into a service (`PrismaService`)
+- ✅ Handle errors with try-catch and detailed logging
+- ✅ Always validate inputs (DTOs or Zod/Yup)
 
-- Keep schema and migration history in version control
-
-- Avoid direct usage of db.push in production
-
-- Always regenerate client after schema change
-
-- Use include and select to limit over-fetching
-
-- Modularize your Prisma client in large projects
 
 # 🆚 Prisma vs Sequelize 
 
