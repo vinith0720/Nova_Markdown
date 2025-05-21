@@ -175,7 +175,14 @@ await prisma.user.upsert(...)
 ```bash
 npx prisma migrate dev --name init
 ```
+### ⚙️ What Happens During `npx prisma migrate dev`
+- Compares your current `schema.prisma` with migration history
 
+- Generates a SQL migration file
+
+- Applies that SQL to your database using `migration-engine`
+
+- Updates `_prisma_migrations` table to keep track
 ### Apply migrations only
 ```
 npx prisma migrate deploy
@@ -190,6 +197,16 @@ npx prisma db push
 ```
 npx prisma generate
 ```
+### 🧪 B What Happens During `npx prisma generate`
+- Reads your schema.prisma
+
+- Introspects your model definitions
+
+- Generates TypeScript-safe Prisma Client code in node_modules/.prisma/client
+
+- This client wraps the query engine and gives you the nice DX you're familiar with
+
+  
 # 🧑‍💻 Querying the Database
 ### 🔍 Find Users with Posts
 ```ts
