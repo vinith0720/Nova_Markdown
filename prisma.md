@@ -175,19 +175,76 @@ model Post {
 
 ## prisma.ts
 ```ts
-import { PrismaClient } from '@prisma/client'
-// or
-// const { PrismaClient } = require('@prisma/client')
 
+// ✅ Import Prisma Client
+import { PrismaClient } from '@prisma/client'
+
+// ✅ Instantiate the client
 const prisma = new PrismaClient()
 
-// use inside an `async` function to `await` the result
-await prisma.user.findUnique(...)
-await prisma.user.findMany(...)
-await prisma.user.create(...)
-await prisma.user.update(...)
-await prisma.user.delete(...)
-await prisma.user.upsert(...)
+// ✅ Connect manually (optional, usually not required)
+await prisma.$connect()
+
+// ✅ Disconnect manually (important in scripts)
+await prisma.$disconnect()
+
+// ✅ Simple find query
+const users = await prisma.user.findMany()
+//  Returns all users
+
+// ✅ Create new record
+const user = await prisma.user.create({
+  data: {
+    name: 'Alice',
+    email: 'alice@prisma.io'
+  }
+})
+//  Creates and returns new user
+
+// ✅ Update a record
+await prisma.user.update({
+  where: { id: 1 },
+  data: { email: 'new@prisma.io' }
+})
+//  Updates user by ID
+
+// ✅ Delete a record
+await prisma.user.delete({
+  where: { id: 1 }
+})
+//  Deletes user by ID
+
+// ✅ Nested writes
+await prisma.user.create({
+  data: {
+    name: 'Bob',
+    email: 'bob@prisma.io',
+    posts: {
+      create: [
+        { title: 'First post' },
+        { title: 'Second post' }
+      ]
+    }
+  }
+})
+//  Creates user and multiple posts in one go
+
+
+// ✅ Filtering and selecting
+const activeUsers = await prisma.user.findMany({
+  where: { isActive: true },
+  select: { name: true, email: true }
+})
+// Fetches only selected fields from users
+
+
+// ✅ Include related data (join-like behavior)
+const userWithPosts = await prisma.user.findUnique({
+  where: { id: 1 },
+  include: { posts: true }
+})
+// Includes all posts of the user
+
 ```
 ## 🛠️ Migrations & DB Sync
 
