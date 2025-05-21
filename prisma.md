@@ -83,6 +83,25 @@ const user = await prisma.user.findMany({ include: { posts: true } });
 
 - Executes them and returns the results
 
+# 🔄 Flow Example
+-  You write this in your app:
+
+``` ts
+const user = await prisma.user.findFirst({ where: { email: 'a@a.com' } });
+```
+-  Prisma Client transforms it into a GraphQL-like internal query (DML/DSL format).
+
+-  This internal query is sent to the Rust-based query engine.
+
+-  The query engine converts that into optimized SQL:
+
+``` sql
+SELECT * FROM "User" WHERE email = 'a@a.com' LIMIT 1;
+```
+-  The database executes the SQL and returns the row(s).
+
+-  The engine converts the result to JSON, sends it to Prisma Client, which returns a typed object.
+
 ## 🏗️ Project Structure Example
 ``` psql
 my-app/
