@@ -1,4 +1,4 @@
-# 📘 Prisma ORM Complete Guide 
+# 📘 Prisma ORM 
 ### 📌 What is Prisma?
 `Prisma` is a next-generation `TypeScript ORM` for `Node.js` and `JavaScript`. It provides a `clean`, `type-safe,` and performant way to interact with your relational databases like `PostgreSQL`, `MySQL`, `SQLite`, and `SQL Server`.
 #
@@ -34,6 +34,25 @@
          └───────────────────────────┘
 
 ```
+## 🖼️ Prisma Query Engine Flow
+
+Below is the official diagram showing how Prisma processes a query at runtime:
+
+![Prisma Query Engine Flow](https://www.prisma.io/docs/assets/images/typical-flow-query-engine-at-runtime-73ffdee4acc20a853bbd431dc12fb64f.png "Prisma Query Engine Runtime Flow")
+
+## 🔢 Prisma Query Flow – Step-by-Step
+
+1. `$connect()` is invoked on Prisma Client.
+2. The Query Engine is started.
+3. The Query Engine establishes connections to the database and creates a connection pool.
+4. Prisma Client is now ready to send queries to the database.
+5. Prisma Client sends a `findMany()` query to the Query Engine.
+6. The Query Engine translates the query into SQL and sends it to the database.
+7. The Query Engine receives the SQL response from the database.
+8. The Query Engine returns the result as plain JavaScript objects to Prisma Client.
+9. `$disconnect()` is invoked on Prisma Client.
+10. The Query Engine closes the database connections.
+11. The Query Engine is stopped.
 
 # 🔍 Detailed Breakdown of Each Layer
 ## 1. Your Application (Node.js)
@@ -102,27 +121,62 @@ SELECT * FROM "User" WHERE email = 'a@a.com' LIMIT 1;
 
 -  The engine converts the result to JSON, sends it to Prisma Client, which returns a typed object.
 
-## 🖼️ Prisma Query Engine Flow
 
-Below is the official diagram showing how Prisma processes a query at runtime:
+# 🚀 Getting Started
 
-![Prisma Query Engine Flow](https://www.prisma.io/docs/assets/images/typical-flow-query-engine-at-runtime-73ffdee4acc20a853bbd431dc12fb64f.png "Prisma Query Engine Runtime Flow")
+## Install dependencies
+```
+npm install prisma --save-dev
+npm install @prisma/client
+```
 
-## 🔢 Prisma Query Flow – Step-by-Step
+# ⚠️ Prisma cli-commands
+``` bash
 
-1. `$connect()` is invoked on Prisma Client.
-2. The Query Engine is started.
-3. The Query Engine establishes connections to the database and creates a connection pool.
-4. Prisma Client is now ready to send queries to the database.
-5. Prisma Client sends a `findMany()` query to the Query Engine.
-6. The Query Engine translates the query into SQL and sends it to the database.
-7. The Query Engine receives the SQL response from the database.
-8. The Query Engine returns the result as plain JavaScript objects to Prisma Client.
-9. `$disconnect()` is invoked on Prisma Client.
-10. The Query Engine closes the database connections.
-11. The Query Engine is stopped.
+# ✅ Initialize Prisma in your project
+npx prisma init
+#  Creates `schema.prisma`, `.env`, and `prisma/` folder
 
-## 🏗️ Project Structure Example
+# ✅ Pull existing DB structure into Prisma schema
+npx prisma db pull
+#  Reads tables from database and generates Prisma models
+
+# ✅ Push schema changes to your database (⚠️ destructive in production)
+npx prisma db push
+# └─ Updates your database without creating migration history
+
+# ✅ Create and apply a new migration
+npx prisma migrate dev --name init
+#  Best for development, generates SQL and applies it to DB
+
+# ✅ Format the schema.prisma file
+npx prisma format
+#  Cleans and formats your schema like Prettier
+
+# ✅ Open Prisma Studio (GUI for your DB)
+npx prisma studio
+#  Opens a local GUI to explore and edit DB data
+
+# ✅ Seed your database with test or default data
+npx prisma db seed
+# Executes your custom seed script (if defined)
+
+# ✅ Generate Prisma Client based on schema
+npx prisma generate
+#  Generates TypeScript/JS client you can import in your app
+
+# ✅ Reset database (dangerous for production!)
+npx prisma migrate reset
+# Drops all data, re-applies migrations, and runs seed script
+```
+
+## 🔍 Initialize Prisma
+
+``` sql
+npx prisma init
+```
+
+### 🏗️ Project Structure Example
 ``` psql
 my-app/
 ├── prisma/
@@ -133,19 +187,7 @@ my-app/
 ├── package.json
 └── tsconfig.json
 ```
-# 🚀 Getting Started
-
-## Install dependencies
-```
-npm install prisma --save-dev
-npm install @prisma/client
-```
-## Initialize Prisma
-
-``` sql
-npx prisma init
-```
-## 🧾 schema.prisma Example
+### 🧾 schema.prisma Example
 
 ```ts
 generator client {
@@ -187,68 +229,12 @@ await prisma.$connect()
 
 // ✅ Disconnect manually (important in scripts)
 await prisma.$disconnect()
-
-// ✅ Simple find query
-const users = await prisma.user.findMany()
-//  Returns all users
-
-// ✅ Create new record
-const user = await prisma.user.create({
-  data: {
-    name: 'Alice',
-    email: 'alice@prisma.io'
-  }
-})
-//  Creates and returns new user
-
-// ✅ Update a record
-await prisma.user.update({
-  where: { id: 1 },
-  data: { email: 'new@prisma.io' }
-})
-//  Updates user by ID
-
-// ✅ Delete a record
-await prisma.user.delete({
-  where: { id: 1 }
-})
-//  Deletes user by ID
-
-// ✅ Nested writes
-await prisma.user.create({
-  data: {
-    name: 'Bob',
-    email: 'bob@prisma.io',
-    posts: {
-      create: [
-        { title: 'First post' },
-        { title: 'Second post' }
-      ]
-    }
-  }
-})
-//  Creates user and multiple posts in one go
-
-
-// ✅ Filtering and selecting
-const activeUsers = await prisma.user.findMany({
-  where: { isActive: true },
-  select: { name: true, email: true }
-})
-// Fetches only selected fields from users
-
-
-// ✅ Include related data (join-like behavior)
-const userWithPosts = await prisma.user.findUnique({
-  where: { id: 1 },
-  include: { posts: true }
-})
-// Includes all posts of the user
-
 ```
+
 ## 🛠️ Migrations & DB Sync
 
 ### Create a new migration and apply
+
 ```bash
 npx prisma migrate dev --name init
 ```
@@ -260,12 +246,12 @@ npx prisma migrate dev --name init
 - Applies that SQL to your database using `migration-engine`
 
 - Updates `_prisma_migrations` table to keep track
-### Apply migrations only
+### ✅ Apply migrations only
 ```
 npx prisma migrate deploy
 ```
 
-### Push changes directly (without migration files, useful for prototyping)
+### ✅ Push changes directly (without migration files, useful for prototyping)
 ```
 npx prisma db push
 ```
@@ -274,18 +260,20 @@ npx prisma db push
 ```
 npx prisma generate
 ```
-### 🧪 B What Happens During `npx prisma generate`
+### 🧪  What Happens During `npx prisma generate`
 - Reads your schema.prisma
 
 - Introspects your model definitions
 
-- Generates TypeScript-safe Prisma Client code in node_modules/.prisma/client
+- Generates TypeScript-safe Prisma Client code in `node_modules/.prisma/client`.
 
 - This client wraps the query engine and gives you the nice DX you're familiar with
 
   
 # 🧑‍💻 Querying the Database
+
 ### 🔍 Find Users with Posts
+
 ```ts
 const users = await prisma.user.findMany({
   include: { posts: true }
@@ -351,7 +339,8 @@ async function main() {
 }
 main();
 ```
-## prisma seed
+
+## Prisma seed
 ```
 npx prisma db seed
 ```
@@ -362,7 +351,70 @@ npx prisma studio
 ```
 Use this to explore and edit your database visually in the browser.
 
+## Prisma example
+```ts
+
+// ✅ Simple find query
+const users = await prisma.user.findMany()
+//  Returns all users
+
+// ✅ Create new record
+const user = await prisma.user.create({
+  data: {
+    name: 'Alice',
+    email: 'alice@prisma.io'
+  }
+})
+//  Creates and returns new user
+
+// ✅ Update a record
+await prisma.user.update({
+  where: { id: 1 },
+  data: { email: 'new@prisma.io' }
+})
+//  Updates user by ID
+
+// ✅ Delete a record
+await prisma.user.delete({
+  where: { id: 1 }
+})
+//  Deletes user by ID
+
+// ✅ Nested writes
+await prisma.user.create({
+  data: {
+    name: 'Bob',
+    email: 'bob@prisma.io',
+    posts: {
+      create: [
+        { title: 'First post' },
+        { title: 'Second post' }
+      ]
+    }
+  }
+})
+//  Creates user and multiple posts in one go
+
+
+// ✅ Filtering and selecting
+const activeUsers = await prisma.user.findMany({
+  where: { isActive: true },
+  select: { name: true, email: true }
+})
+// Fetches only selected fields from users
+
+
+// ✅ Include related data (join-like behavior)
+const userWithPosts = await prisma.user.findUnique({
+  where: { id: 1 },
+  include: { posts: true }
+})
+// Includes all posts of the user
+
+
+```
 ## ✅ Best Practices
+
 - Use npx prisma format to format schema.prisma
 
 - Keep schema and migration history in version control
