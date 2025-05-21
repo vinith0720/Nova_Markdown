@@ -102,6 +102,12 @@ SELECT * FROM "User" WHERE email = 'a@a.com' LIMIT 1;
 
 -  The engine converts the result to JSON, sends it to Prisma Client, which returns a typed object.
 
+## 🖼️ Prisma Query Engine Flow
+
+Below is the official diagram showing how Prisma processes a query at runtime:
+
+![Prisma Query Engine Flow](https://www.prisma.io/docs/assets/images/typical-flow-query-engine-at-runtime-73ffdee4acc20a853bbd431dc12fb64f.png "Prisma Query Engine Runtime Flow")
+
 ## 🏗️ Project Structure Example
 ``` psql
 my-app/
