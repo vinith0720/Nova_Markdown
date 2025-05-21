@@ -108,6 +108,20 @@ Below is the official diagram showing how Prisma processes a query at runtime:
 
 ![Prisma Query Engine Flow](https://www.prisma.io/docs/assets/images/typical-flow-query-engine-at-runtime-73ffdee4acc20a853bbd431dc12fb64f.png "Prisma Query Engine Runtime Flow")
 
+## 🔢 Prisma Query Flow – Step-by-Step
+
+1. `$connect()` is invoked on Prisma Client.
+2. The Query Engine is started.
+3. The Query Engine establishes connections to the database and creates a connection pool.
+4. Prisma Client is now ready to send queries to the database.
+5. Prisma Client sends a `findMany()` query to the Query Engine.
+6. The Query Engine translates the query into SQL and sends it to the database.
+7. The Query Engine receives the SQL response from the database.
+8. The Query Engine returns the result as plain JavaScript objects to Prisma Client.
+9. `$disconnect()` is invoked on Prisma Client.
+10. The Query Engine closes the database connections.
+11. The Query Engine is stopped.
+
 ## 🏗️ Project Structure Example
 ``` psql
 my-app/
