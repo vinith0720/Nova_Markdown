@@ -147,6 +147,21 @@ This creates a `prisma/` folder with:
 DATABASE_URL="mysql://user:password@localhost:3306/mydb"
 ```
 
+
+## 🔧 Prisma Pool Configuration
+- Prisma's client is stateless, but its query engine handles pooling.
+- You don’t configure the pool directly in code, but via your .env or DATABASE_URL string.
+
+✅ PostgreSQL / MySQL
+```env
+
+DATABASE_URL="postgresql://user:pass@host:5432/dbname?connection_limit=10"
+
+DATABASE_URL="mysql://user:pass@host:3306/dbname?pool_timeout=30"
+
+```
+Use `connection_limit` or `pool_timeout` to control the pool.
+
 ### 4. Generate Prisma Client
 
 ```bash
