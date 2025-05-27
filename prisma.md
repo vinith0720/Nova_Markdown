@@ -150,7 +150,7 @@ DATABASE_URL="mysql://user:password@localhost:3306/mydb"
 
 ## 🔧 Prisma Pool Configuration
 - Prisma's client is stateless, but its query engine handles pooling.
-- You don’t configure the pool directly in code, but via your `.env `or` DATABASE_URL string`.
+- You don’t configure the pool directly in code, but via your `.env` or `DATABASE_URL string`.
 
 ✅ PostgreSQL / MySQL
 ```env
